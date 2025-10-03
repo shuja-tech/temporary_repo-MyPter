@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a5276; 
+            --secondary-color: #5dade2; 
+            --accent-color: #f7a04f; 
+            --text-dark: #3a3a3a; 
+            --text-light: #fefefe;
+            --bg-light: #f0f2f5;
+            --bg-card: #ffffff; 
+            --border-color: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.12);
+        }       
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; 
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px; 
+            padding: 30px; 
+            background-color: var(--bg-card);
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px var(--shadow-medium); 
+            transition: all 0.4s ease-in-out; 
+            position: relative; 
+        }
+
+        .form-box {
+            display: block;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            transform: translateY(0);
+        }
+
+        .form-box.hidden {
+            display: none; 
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, select { 
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            color: var(--text-dark);
+            background-color: #fcfcfc;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 10px;
+            padding-right: 40px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.2);
+        }
+
+        .btn {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 17px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: var(--primary-color);
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 15px;
+            color: #6a6a6a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loginFormBox" class="form-box">
+            <h2>Welcome</h2>
+            <form>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit" class="btn">Log In</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="showSignup">Sign Up</a></p>
+        </div>
+
+        <div id="signupFormBox" class="form-box hidden">
+            <h2>Create Account</h2>
+            <form>
+                <input type="text" placeholder="Username" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <input type="password" placeholder="Confirm Password" required>
+                <select id="userRole" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="client">Client</option>
+                    <option value="trainer">Trainer</option>
+                </select>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="showLogin">Log In</a></p>
+        </div>
+    </div>
+
+    <script>
+        const loginFormBox = document.getElementById('loginFormBox');
+        const signupFormBox = document.getElementById('signupFormBox');
+        const showSignupLink = document.getElementById('showSignup');
+        const showLoginLink = document.getElementById('showLogin');
+
+        showSignupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginFormBox.classList.add('hidden');
+            setTimeout(() => {
+                loginFormBox.style.display = 'none';
+                signupFormBox.style.display = 'block';
+                setTimeout(() => {
+                    signupFormBox.classList.remove('hidden');
+                }, 10);
+            }, 500);
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupFormBox.classList.add('hidden');
+            setTimeout(() => {
+                signupFormBox.style.display = 'none';
+                loginFormBox.style.display = 'block'; 
+                setTimeout(() => { // Delay showing login form
+                    loginFormBox.classList.remove('hidden');
+                }, 10); // Small delay for reflow
+            }, 500); // Match this to your CSS transition duration
+        });
+    </script>
+</body>
+</html>
